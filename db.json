@@ -1,0 +1,59 @@
+{
+  "products": [],
+  "categories": [
+    { "id": "1", "name": "All" },
+    { "id": "2", "name": "Amazon Devices" },
+    { "id": "3", "name": "Books" },
+    { "id": "4", "name": "Electronics" },
+    { "id": "5", "name": "Fashion" }
+  ],
+  "cart": [],
+  
+  "users": [
+   
+  ],
+
+
+  "banners": [
+    { "image": "http://localhost:8000/assets/clothing.jpg", 
+    "altText": "T-SHIRTS Sale" 
+  },
+    { 
+      "image": "/assets/smartPhone.jpg",
+     "altText": "SmartPhones Sale" 
+    },
+    { 
+      "image": "/assets/MobileAccesseries.jpg",
+     "altText": "Mobile Accessories Sale"
+     },
+    { 
+      "image": "/assets/poojaEssentials.jpg", 
+    "altText": "Pooja Essentials Sale"
+   },
+    { 
+    "image": "/assets/Amazon fashion.jpg", 
+    "altText": "Amazon Fashion Sale" 
+  }
+  ],
+
+
+
+  "homepageSections": [
+  {
+    "title": "Revamp your home in style",
+    "seeMoreText": "Explore all",
+    "seeMoreLink": "/home-style",
+    "items": [
+      { "image": "/assets/cusion.jpg", "altText": "Cushion covers", "label": "Cushion covers, bedsheets & more" },
+      { "image": "/assets/figurines.jpg", "altText": "Figurines", "label": "Figurines, vases & more" },
+      { "image": "/assets/home-storage.jpg", "altText": "Home storage", "label": "Home storage" },
+      { "image": "/assets/lighting.jpg", "altText": "Lighting solutions", "label": "Lighting solutions" }
+    ]
+  }
+
+]
+
+
+
+
+}
