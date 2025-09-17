@@ -5,10 +5,10 @@ import "slick-carousel/slick/slick-theme.css";
 const ArrowStyles =
   "absolute top-1/2 -translate-y-1/2 bg-black bg-opacity-60 rounded-full w-10 h-10 flex items-center justify-center cursor-pointer z-50";
 
-const NextArrow = ({ onClick }) => (
+export const NextArrow = ({ onClick }) => (
   <button
     type="button"
-    className={`${ArrowStyles} right-3`}
+    className={`${ArrowStyles} right-3 top-1/4`}
     onClick={onClick}
     aria-label="Next Slide"
   >
@@ -24,10 +24,10 @@ const NextArrow = ({ onClick }) => (
   </button>
 );
 
-const PrevArrow = ({ onClick }) => (
+export const PrevArrow = ({ onClick }) => (
   <button
     type="button"
-    className={`${ArrowStyles} left-3`}
+    className={`${ArrowStyles} left-3 top-1/4`}
     onClick={onClick}
     aria-label="Previous Slide"
   >
@@ -58,7 +58,7 @@ export const BannerSlider = ({ banners }) => {
   };
 
 return (
-<div className="relative mx-auto max-w-[1500px] overflow-hidden ">
+<div className="relative mx-auto max-w-[1500px] overflow-hidden mt-0">
     <Slider {...settings}>
       {banners.map((banner, index) => (
         <div key={index} className="relative">

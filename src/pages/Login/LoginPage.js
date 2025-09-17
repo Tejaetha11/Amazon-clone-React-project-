@@ -1,30 +1,40 @@
-import  { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import amazonLogoDark from "../../assets/amazon_logo_dark.png";
 import { useAuth } from "../../hooks";
-import { useEffect } from "react";
 
 export const LoginPage = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
+  const [formError, setFormError] = useState("");
   const { error, loading, login } = useAuth();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.id]: e.target.value });
+    setFormError(""); // Clear error on input change
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!form.email) {
+      setFormError("Enter email or phone number");
+      return;
+    }
+    if (!form.password) {
+      setFormError("Enter password");
+      return;
+    }
+    setFormError("");
     login(form.email, form.password);
   };
 
   useEffect(() => {
-  setForm({ email: "", password: "" });
+    setForm({ email: "", password: "" });
   }, []);
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-white">
-      <div className="mt-8">
+      <div className="mt-5">
         <Link to="/">
           <img src={amazonLogoDark} alt="Amazon Logo" width={100} />
         </Link>
@@ -32,7 +42,7 @@ export const LoginPage = () => {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white border border-gray-300 rounded-lg p-8 w-[350px] shadow mt-12 flex flex-col"
+        className="bg-white border border-gray-300 rounded-lg p-8 w-[350px] shadow mt-3 flex flex-col"
       >
         <h1 className="text-2xl font-normal mb-4">Sign in</h1>
 
@@ -69,7 +79,12 @@ export const LoginPage = () => {
           </button>
         </div>
 
+        {/* Display validation error */}
+        {formError && <p className="text-red-600 text-sm mb-2">{formError}</p>}
+
+        {/* Display login error from useAuth */}
         {error && <p className="text-red-600 text-sm mb-2">{error}</p>}
+
         <button
           type="submit"
           disabled={loading}
@@ -90,7 +105,7 @@ export const LoginPage = () => {
         </p>
       </form>
 
-      <div className="flex flex-col items-center w-full mt-8 mb-8">
+      <div className="flex flex-col items-center w-full mt-8 ">
         <div className="flex items-center w-[350px] text-gray-600 text-sm gap-2 mb-4">
           <hr className="flex-grow border-t border-gray-300" />
           <span>New to Amazon?</span>
@@ -102,9 +117,9 @@ export const LoginPage = () => {
           </button>
         </a>
       </div>
-      {/* Footer */}
+
       <footer className="w-full max-h-[200px] fixed bottom-0 bg-gradient-to-b from-gray-100 to-white border-t border-gray-200 text-xs">
-        <div className="flex justify-center gap-8 py-5">
+        <div className="flex justify-center  gap-8 py-5">
           <a href="#" className="text-blue-700 hover:underline">
             Conditions of Use
           </a>
@@ -116,7 +131,7 @@ export const LoginPage = () => {
           </a>
         </div>
         <p className="text-center pb-4 text-gray-600">
-          © 1996-2024, Amazon.com, Inc. or its affiliates
+          © 1996-2025, Amazon.com, Inc. or its affiliates
         </p>
       </footer>
     </div>

@@ -1,4 +1,4 @@
-
+import amazonLogo1 from "../../assets/amazon_logo_dark.png";
 
 export const Footer = () => { 
 return (
@@ -82,7 +82,7 @@ return (
           <div className="flex items-center justify-center space-x-6">
             {/* Amazon logo */}
             <div className="flex flex-col items-center">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon Logo" className="w-24 mr-5 mt-2" />
+              <img src={amazonLogo1} alt="Amazon Logo" className="w-24 mr-5 mt-2" />
             </div>
             
             {/* Language selector */}
