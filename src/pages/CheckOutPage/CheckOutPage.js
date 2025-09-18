@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useCart, useAuth } from "../../hooks";
 import { useNavigate, Link } from "react-router-dom";
+import { API_BASE_URL } from "../../Config/api";
 
 export const CheckoutPage = () => {
   const { cartItems, getCartTotal, clearCart } = useCart();
@@ -36,7 +37,7 @@ export const CheckoutPage = () => {
   const fetchAddresses = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8000/addresses?userId=${user.id}`);
+      const response = await fetch(`${API_BASE_URL}/addresses?userId=${user.id}`);
       if (!response.ok) throw new Error('Failed to fetch addresses');
       const userAddresses = await response.json();
       setAddresses(userAddresses);
@@ -51,7 +52,7 @@ export const CheckoutPage = () => {
   const handleDeleteAddress = async (addressId) => {
     if (!window.confirm('Are you sure you want to delete this address?')) return;
     try {
-      const response = await fetch(`http://localhost:8000/addresses/${addressId}`, {
+      const response = await fetch(`${API_BASE_URL}/addresses/${addressId}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -88,7 +89,7 @@ export const CheckoutPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8000/orders", {
+      const response = await fetch(`${API_BASE_URL}/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newOrder)

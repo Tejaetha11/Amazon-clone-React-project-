@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";  // Added Link import
 import { useCart } from "../../hooks";
+import { API_BASE_URL } from "../../Config/api";
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -14,7 +15,7 @@ export const ProductsPage = () => {
   const { addToCart } = useCart();
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch(`${API_BASE_URL}/products`)
       .then((res) => res.json())
       .then((allProducts) => {
         setProducts(

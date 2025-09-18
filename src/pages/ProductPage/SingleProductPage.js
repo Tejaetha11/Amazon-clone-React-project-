@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useCart, useAuth } from "../../hooks";
+import { API_BASE_URL } from "../../Config/api";
 
 export const SingleProductPage = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ export const SingleProductPage = () => {
   useEffect(() => {
     async function fetchProduct() {
       try {
-        const res = await fetch(`http://localhost:8000/products/${id}`);
+        const res = await fetch(`${API_BASE_URL}/products/${id}`);
         const data = await res.json();
         setProduct(data);
       } catch {
@@ -35,7 +36,7 @@ export const SingleProductPage = () => {
     async function fetchWishlist() {
       try {
         const res = await fetch(
-          `http://localhost:8000/wishlist?userId=${user.id}&productId=${id}`
+          `${API_BASE_URL}/wishlist?userId=${user.id}&productId=${id}`
         );
         const data = await res.json();
         setWishlistItem(data.length > 0 ? data[0] : null);
@@ -63,7 +64,7 @@ export const SingleProductPage = () => {
     };
 
     try {
-      const res = await fetch("http://localhost:8000/wishlist", {
+      const res = await fetch(`${API_BASE_URL}/wishlist`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newItem),
@@ -79,7 +80,7 @@ export const SingleProductPage = () => {
     if (!wishlistItem) return;
 
     try {
-      const res = await fetch(`http://localhost:8000/wishlist/${wishlistItem.id}`, {
+      const res = await fetch(`${API_BASE_URL}/wishlist/${wishlistItem.id}`, {
         method: "DELETE",
       });
       if (res.ok) {

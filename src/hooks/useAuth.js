@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { API_BASE_URL } from "../Config/api";
 
 export function useAuth() {
   const [error, setError] = useState(null);
@@ -17,14 +18,14 @@ export function useAuth() {
     }
   }, []);
 
-  // ✅ Login function
+  //  Login function
   const login = async (email, password) => {
     setLoading(true);
     setError(null);
 
     try {
       const res = await fetch(
-        `http://localhost:8000/users?email=${email}&password=${password}`
+        `${API_BASE_URL}/users?email=${email}&password=${password}`
       );
       const data = await res.json();
 
@@ -44,14 +45,14 @@ export function useAuth() {
     setLoading(false);
   };
 
-  // ✅ Signup function (with default address)
+  // Signup function (with default address)
   const signup = async (user) => {
     setLoading(true);
     setError(null);
 
     try {
       const checkRes = await fetch(
-        `http://localhost:8000/users?email=${user.email}`
+        `${API_BASE_URL}/users?email=${user.email}`
       );
       const existing = await checkRes.json();
 
@@ -66,7 +67,7 @@ export function useAuth() {
           },
         };
 
-        const res = await fetch("http://localhost:8000/users", {
+        const res = await fetch(`${API_BASE_URL}/users`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(newUser),
@@ -89,7 +90,7 @@ export function useAuth() {
   // ✅ Update user (for saving new address)
   const updateUser = async (updatedUser) => {
     try {
-      const res = await fetch(`http://localhost:8000/users/${updatedUser.id}`, {
+      const res = await fetch(`${API_BASE_URL}/users/${updatedUser.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedUser),

@@ -29,7 +29,7 @@ export const SignupPage = () => {
       return;
     }
 
-    setFormError(""); // Clear form error before signup
+    setFormError(""); 
     signup(form);
   };
 

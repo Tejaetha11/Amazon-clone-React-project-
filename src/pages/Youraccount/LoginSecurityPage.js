@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../../hooks";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../Config/api";
 
 export const LoginSecurityPage = () => {
   const { user, updateUser, logout } = useAuth();
@@ -23,7 +24,7 @@ export const LoginSecurityPage = () => {
 
   useEffect(() => {
     if (user?.id) {
-      fetch(`http://localhost:8000/users/${user.id}`)
+      fetch(`${API_BASE_URL}/users/${user.id}`)
         .then(res => res.json())
         .then(profile => {
           setUserProfile(profile);
@@ -51,7 +52,7 @@ export const LoginSecurityPage = () => {
       const updatedData = { ...userProfile, [field]: formData[field] };
       
       // Update in db.json
-      const response = await fetch(`http://localhost:8000/users/${user.id}`, {
+      const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -100,7 +101,7 @@ export const LoginSecurityPage = () => {
     try {
       const updatedData = { ...userProfile, password: passwordData.newPassword };
       
-      const response = await fetch(`http://localhost:8000/users/${user.id}`, {
+      const response = await fetch(`${API_BASE_URL}/users/${user.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

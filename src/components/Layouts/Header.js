@@ -110,7 +110,7 @@ export const Header = () => {
     setIsAccountMenuOpen(false);
   };
 
-  // 🔍 Handle search functionality
+  //  Handle search functionality
   const handleSearch = () => {
     if (searchQuery.trim()) {
       const searchParams = new URLSearchParams({
@@ -240,7 +240,7 @@ export const Header = () => {
             placeholder="Search Amazon"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyPress={handleSearchKeyPress}
+            onKeyPress ={handleSearchKeyPress}
             className="flex-grow outline-none border-none px-5 py-2 text-lg text-black"
             onFocus={onSearchFocus}
             onBlur={onSearchBlur}

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../hooks";
+import { API_BASE_URL } from "../../Config/api";
 
 export const OrderDetailsPage = () => {
   const { id } = useParams();
@@ -10,12 +11,12 @@ export const OrderDetailsPage = () => {
   const [order, setOrder] = useState(null);
 
   useEffect(() => {
-    // Try fetching directly by ID
-    fetch(`http://localhost:8000/orders/${id}`)
+ 
+    fetch(`${API_BASE_URL}/orders/${id}`)
       .then((r) => {
         if (r.ok) return r.json();
         // If direct fetch fails, fallback to query search
-        return fetch(`http://localhost:8000/orders?id=${id}`).then((res) =>
+        return fetch(`${API_BASE_URL}/orders?id=${id}`).then((res) =>
           res.json()
         );
       })

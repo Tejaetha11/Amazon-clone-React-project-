@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks";
+import { API_BASE_URL } from "../../Config/api";
 
 export const AddressesPage = () => {
   const { user } = useAuth();
@@ -30,7 +31,7 @@ export const AddressesPage = () => {
     setLoading(true);
     try {
       const response = await fetch(
-        `http://localhost:8000/addresses?userId=${encodeURIComponent(user.id)}`
+        `${API_BASE_URL}/addresses?userId=${encodeURIComponent(user.id)}`
       );
       if (!response.ok) throw new Error("Failed to fetch addresses");
       const userAddresses = await response.json();
@@ -84,7 +85,7 @@ export const AddressesPage = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/addresses${editingId ? `/${editingId}` : ""}`,
+        `${API_BASE_URL}/addresses${editingId ? `/${editingId}` : ""}`,
         {
           method: editingId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
@@ -111,7 +112,7 @@ export const AddressesPage = () => {
   const setDefaultAddress = async (addressId) => {
     try {
       for (const addr of addresses) {
-        await fetch(`http://localhost:8000/addresses/${addr.id}`, {
+        await fetch(`${API_BASE_URL}/addresses/${addr.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...addr, isDefault: addr.id === addressId }),
@@ -128,7 +129,7 @@ export const AddressesPage = () => {
 
     setSaveStatus("Deleting...");
     try {
-      const response = await fetch(`http://localhost:8000/addresses/${addressId}`, {
+      const response = await fetch(`${API_BASE_URL}/addresses/${addressId}`, {
         method: "DELETE",
       });
       if (!response.ok) throw new Error(`Failed to delete address (status ${response.status})`);

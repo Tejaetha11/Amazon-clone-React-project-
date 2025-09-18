@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth, useCart } from "../../hooks";
+import { API_BASE_URL } from "../../Config/api";
 
 export const OrdersPage = () => {
   const { user } = useAuth();
@@ -13,7 +14,7 @@ export const OrdersPage = () => {
 
   useEffect(() => {
     if (user?.id) {
-      fetch(`http://localhost:8000/orders?userId=${user.id}&_sort=date&_order=desc`)
+      fetch(`${API_BASE_URL}/orders?userId=${user.id}&_sort=date&_order=desc`)
         .then((r) => r.json())
         .then(setOrders)
         .catch(console.error);
@@ -45,7 +46,7 @@ export const OrdersPage = () => {
     setOrders(updatedOrders);
 
     // Update backend (PATCH)
-    await fetch(`http://localhost:8000/orders/${order.id}`, {
+    await fetch(`${API_BASE_URL}/orders/${order.id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items: updatedOrders.find((o) => o.id === order.id).items }),

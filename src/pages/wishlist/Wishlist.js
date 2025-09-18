@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth, useCart } from "../../hooks";
 import { Link } from "react-router-dom";
+import { API_BASE_URL } from "../../Config/api";
 
 export const WishlistPage = () => {
   const { user } = useAuth();
@@ -10,7 +11,7 @@ export const WishlistPage = () => {
 
   useEffect(() => {
     if (!user) return;
-    fetch(`http://localhost:8000/wishlist?userId=${user.id}`)
+    fetch(`${API_BASE_URL}/wishlist?userId=${user.id}`)
       .then((res) => res.json())
       .then((data) => {
         setWishlist(data);
@@ -20,7 +21,7 @@ export const WishlistPage = () => {
   }, [user]);
 
   const handleRemove = async (id) => {
-    await fetch(`http://localhost:8000/wishlist/${id}`, { method: "DELETE" });
+    await fetch(`${API_BASE_URL}/wishlist/${id}`, { method: "DELETE" });
     setWishlist((prev) => prev.filter((item) => item.id !== id));
   };
 

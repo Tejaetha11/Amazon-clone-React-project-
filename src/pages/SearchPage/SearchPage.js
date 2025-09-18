@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { useCart } from "../../hooks/useCart";
+import { API_BASE_URL } from "../../Config/api";
 
 export const SearchPage = () => {
   const [searchParams] = useSearchParams();
@@ -17,7 +18,7 @@ export const SearchPage = () => {
       setLoading(true);
       try {
         // Fetch all products first
-        const response = await fetch(`http://localhost:8000/products`);
+        const response = await fetch(`${API_BASE_URL}/products`);
         const allProducts = await response.json();
         
         // Filter products based on search query and category

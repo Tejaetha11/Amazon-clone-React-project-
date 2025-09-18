@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../hooks";
+import { API_BASE_URL } from "../../Config/api";
 
 export const AccountPage = () => {
   const { user, logout } = useAuth();
@@ -11,8 +12,8 @@ export const AccountPage = () => {
   useEffect(() => {
     if (user?.id) {
       Promise.all([
-        fetch(`http://localhost:8000/users/${user.id}`).then(res => res.json()),
-        fetch(`http://localhost:8000/orders?userId=${user.id}&_sort=date&_order=desc&_limit=3`).then(res => res.json())
+        fetch(`${API_BASE_URL}/users/${user.id}`).then(res => res.json()),
+        fetch(`${API_BASE_URL}/orders?userId=${user.id}&_sort=date&_order=desc&_limit=3`).then(res => res.json())
       ]).then(([profile, orders]) => {
         setUserProfile(profile);
         setRecentOrders(orders);

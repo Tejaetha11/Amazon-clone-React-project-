@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { BannerSlider } from "./Bannerslider";
 import { MultiItemCard } from "./MultiItemCard";
-import { ProductCarousel } from "./productCarousel"; // 👈 new
+import { ProductCarousel } from "./productCarousel"; 
+import {API_BASE_URL} from "../../../Config/api";
 
 export const Home = () => {
+
   const [banners, setBanners] = useState([]);
   const [sections, setSections] = useState([]);
   const [relatedItems, setRelatedItems] = useState([]);
@@ -13,37 +15,37 @@ export const Home = () => {
   const[bestsellers,setBestsellers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/banners")
+    fetch(`${API_BASE_URL}/banners`)
       .then((res) => res.json())
       .then(setBanners)
       .catch(console.error);
 
-    fetch("http://localhost:8000/homepageSections")
+    fetch(`${API_BASE_URL}/homepageSections`)
       .then((res) => res.json())
       .then(setSections)
       .catch(console.error);
 
-    fetch("http://localhost:8000/relatedItems")
+    fetch(`${API_BASE_URL}/relatedItems`)
       .then((res) => res.json())
       .then(setRelatedItems)
       .catch(console.error);
 
-    fetch("http://localhost:8000/moreItems")
+    fetch(`${API_BASE_URL}/moreItems`)
       .then((res) => res.json())
       .then(setMoreItems)
       .catch(console.error);
 
-    fetch("http://localhost:8000/moreSections")
+    fetch(`${API_BASE_URL}/moreSections`)
     .then(res => res.json())
     .then(setMoreSections)
     .catch(console.error);
 
-    fetch("http://localhost:8000/toppicks")
+    fetch(`${API_BASE_URL}/toppicks`)
     .then(res => res.json())
     .then(setToppicks)
     .catch(console.error);
 
-    fetch("http://localhost:8000/bestsellers")
+    fetch(`${API_BASE_URL}/bestsellers`)
     .then(res => res.json())
     .then(setBestsellers)
     .catch(console.error); 
