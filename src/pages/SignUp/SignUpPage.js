@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { Link } from "react-router-dom";
 import amazonLogoDark from "../../assets/amazon_logo_dark.png";
 import { useAuth } from "../../hooks";
