@@ -6,7 +6,7 @@ return (
       {/* Back to top section */}
       <div className="bg-gray-600 hover:bg-gray-500 transition-colors cursor-pointer">
         <div className="text-center py-4">
-          <span className="text-white text-sm font-normal">Back to top</span>
+          <a href = "#" className="text-white text-sm font-normal">Back to top</a>
         </div>
       </div>
       
