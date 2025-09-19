@@ -1,4 +1,4 @@
-// src/pages/Orders/OrderDetailsPage.jsx
+// Updated OrderDetailsPage.jsx with better address handling
 import React, { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useCart, useAuth } from "../../hooks";
@@ -23,6 +23,33 @@ export const OrderDetailsPage = () => {
   const [submittingReview, setSubmittingReview] = useState(false);
   const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
+  // Helper function to get address from order with multiple fallback options
+  const getOrderAddress = (order) => {
+    // Try different possible address field names
+    const address = order?.address || 
+                   order?.shippingAddress || 
+                   order?.deliveryAddress || 
+                   order?.shipping_address ||
+                   null;
+    
+    return address;
+  };
+
+  // Helper function to format address display
+  const formatAddress = (address) => {
+    if (!address) return null;
+    
+    return {
+      name: address.name || address.fullName || address.firstName + ' ' + (address.lastName || '') || user?.name || "Customer",
+      line1: address.address || address.addressLine1 || address.street || "",
+      line2: address.addressLine2 || "",
+      city: address.city || "",
+      state: address.state || "",
+      pincode: address.pincode || address.zipCode || address.zip || "",
+      phone: address.phone || address.phoneNumber || ""
+    };
+  };
+
   useEffect(() => {
     fetch(`${API_BASE_URL}/orders/${id}`)
       .then((r) => {
@@ -30,11 +57,9 @@ export const OrderDetailsPage = () => {
         return fetch(`${API_BASE_URL}/orders?id=${id}`).then((res) => res.json());
       })
       .then((data) => {
-        if (Array.isArray(data)) {
-          setOrder(data[0] || null);
-        } else {
-          setOrder(data);
-        }
+        const orderData = Array.isArray(data) ? data[0] : data;
+        console.log("Order data:", orderData); // Debug log
+        setOrder(orderData || null);
       })
       .catch(() => setOrder(null));
   }, [id]);
@@ -103,6 +128,10 @@ export const OrderDetailsPage = () => {
   if (!order) {
     return <div className="max-w-3xl mx-auto p-6">Order not found.</div>;
   }
+
+  // Get formatted address
+  const orderAddress = getOrderAddress(order);
+  const formattedAddress = formatAddress(orderAddress);
 
   const handleBuyAgain = () => {
     if (order.items && order.items.length > 0) {
@@ -289,13 +318,21 @@ export const OrderDetailsPage = () => {
               </div>
             </div>
 
-            {/* Delivery address */}
+            {/* Delivery address - Updated */}
             <div className="border-t pt-4">
               <h3 className="font-semibold mb-2">Delivery address</h3>
               <div className="text-sm text-gray-600">
-                <p><strong>{order.address?.name || "Default User"}</strong></p>
-                <p>{order.address?.address || "123 Main Street"}</p>
-                <p>{order.address?.city || "City"}, {order.address?.state || "State"} {order.address?.pincode || "123456"}</p>
+                {formattedAddress ? (
+                  <>
+                    <p><strong>{formattedAddress.name}</strong></p>
+                    <p>{formattedAddress.line1}</p>
+                    {formattedAddress.line2 && <p>{formattedAddress.line2}</p>}
+                    <p>{formattedAddress.city}, {formattedAddress.state} {formattedAddress.pincode}</p>
+                    {formattedAddress.phone && <p>Phone: {formattedAddress.phone}</p>}
+                  </>
+                ) : (
+                  <p>Address information not available</p>
+                )}
               </div>
             </div>
 
@@ -400,11 +437,17 @@ export const OrderDetailsPage = () => {
             Ordered on {new Date(order.date || Date.now()).toLocaleString()}
           </p>
           <p className="text-sm mt-2">
-            <strong>Ship to:</strong> {order.address?.name || "Default User"}
+            <strong>Ship to:</strong> {formattedAddress?.name || "Customer"}
           </p>
-          <p className="text-sm">
-            {order.address?.address || "Unknown"} - {order.address?.pincode || ""}
-          </p>
+          {formattedAddress ? (
+            <>
+              <p className="text-sm">{formattedAddress.line1}</p>
+              {formattedAddress.line2 && <p className="text-sm">{formattedAddress.line2}</p>}
+              <p className="text-sm">{formattedAddress.city}, {formattedAddress.state} - {formattedAddress.pincode}</p>
+            </>
+          ) : (
+            <p className="text-sm text-gray-500">Address not available</p>
+          )}
           
           <div className="mt-4 pt-4 border-t">
             <button

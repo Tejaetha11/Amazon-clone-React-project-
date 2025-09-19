@@ -15,11 +15,11 @@ export const Header = () => {
   const { getCartCount } = useCart(); 
   const navigate = useNavigate();
 
-  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
+  const [iscatageoryOpen, setIscatageoryOpen] = useState(false);
   const [isAccountMenuOpen, setIsAccountMenuOpen] = useState(false);
   const [isLocationModalOpen, setIsLocationModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedcatageory, setSelectedcatageory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
 
   const [currentLocation, setCurrentLocation] = useState("INDIA");
@@ -56,7 +56,7 @@ export const Header = () => {
     if (labelRef.current) {
       setButtonWidth(labelRef.current.offsetWidth + 50);
     }
-  }, [selectedCategory]);
+  }, [selectedcatageory]);
 
   const categories = [
     "All",
@@ -66,43 +66,44 @@ export const Header = () => {
     "boAt",
     "boult",
     "Electronics",
+    "eyewear",
   ];
 
-  const toggleCategoryDropdown = () => {
-    setIsCategoryOpen(!isCategoryOpen);
-    setActiveSection(isCategoryOpen ? null : "category");
+  const togglecatageoryDropdown = () => {
+    setIscatageoryOpen(!iscatageoryOpen);
+    setActiveSection(iscatageoryOpen ? null : "catageory");
     setIsAccountMenuOpen(false);
   };
 
   const toggleAccountMenu = () => {
     if (user) {
       setIsAccountMenuOpen(!isAccountMenuOpen);
-      setIsCategoryOpen(false);
+      setIscatageoryOpen(false);
     }
   };
 
   const toggleLocationModal = () => {
     setIsLocationModalOpen(!isLocationModalOpen);
-    setIsCategoryOpen(false);
+    setIscatageoryOpen(false);
     setIsAccountMenuOpen(false);
     setPincodeInput("");
   };
 
-  const onSelectCategory = (cat) => {
-    setSelectedCategory(cat);
-    setIsCategoryOpen(false);
+  const onSelectcatageory = (cat) => {
+    setSelectedcatageory(cat);
+    setIscatageoryOpen(false);
     setActiveSection(null);
   };
 
   const onSearchFocus = () => {
     setActiveSection("search");
-    setIsCategoryOpen(false);
+    setIscatageoryOpen(false);
     setIsAccountMenuOpen(false);
   };
 
   const onSearchBlur = () => {
     setActiveSection(null);
-    setIsCategoryOpen(false);
+    setIscatageoryOpen(false);
   };
 
   const handleLogout = () => {
@@ -115,7 +116,7 @@ export const Header = () => {
     if (searchQuery.trim()) {
       const searchParams = new URLSearchParams({
         q: searchQuery.trim(),
-        category: selectedCategory !== "All" ? selectedCategory : ""
+        catageory: selectedcatageory !== "All" ? selectedcatageory : ""
       });
       navigate(`/search?${searchParams.toString()}`);
       setSearchQuery("");
@@ -205,27 +206,27 @@ export const Header = () => {
             activeSection === "search" ? "border-2 border-yellow-400" : ""
           }`}
         >
-          {/* Category Dropdown */}
+          {/* catageory Dropdown */}
           <div
             className={`relative flex items-center px-5 py-3 gap-1 rounded-l-md cursor-pointer bg-gray-300 text-black select-none transition-all duration-300 ${
-              activeSection === "category" ? "border-2 border-yellow-400" : ""
+              activeSection === "catageory" ? "border-2 border-yellow-400" : ""
             }`}
-            onClick={toggleCategoryDropdown}
+            onClick={togglecatageoryDropdown}
             tabIndex={0}
             style={{ width: buttonWidth ? buttonWidth : "auto", minWidth: 70 }}
             onBlur={onSearchBlur}
           >
             <p ref={labelRef} className="text-sm whitespace-nowrap">
-              {selectedCategory}
+              {selectedcatageory}
             </p>
             <img src={dropdownIcon} alt="Dropdown" className="h-3" />
-            {isCategoryOpen && (
+            {iscatageoryOpen && (
               <ul className="absolute left-0 top-full mt-1 w-[170px] bg-[#fafafa] rounded-sm shadow border z-50 max-h-60 overflow-auto">
                 {categories.map((cat) => (
                   <li
                     key={cat}
                     className="px-4 py-2 text-black text-sm cursor-pointer hover:bg-gray-100"
-                    onClick={() => onSelectCategory(cat)}
+                    onClick={() => onSelectcatageory(cat)}
                   >
                     {cat}
                   </li>

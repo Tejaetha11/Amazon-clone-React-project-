@@ -206,6 +206,50 @@ export const SingleProductPage = () => {
     );
   };
 
+  // Helper function to render product specifications based on category
+  const renderProductSpecs = () => {
+    const commonSpecs = (
+      <>
+        <div><b>Brand:</b> {product.brand}</div>
+        <div><b>Colour:</b> {product.color || "White"}</div>
+      </>
+    );
+
+    switch (product.catageory) {
+      case 'electronics':
+        return (
+          <>
+            {commonSpecs}
+            {product.earPlacement && <div><b>Ear Placement:</b> {product.earPlacement}</div>}
+            {product.formFactor && <div><b>Form Factor:</b> {product.formFactor}</div>}
+            {product.noiseControl && <div><b>Noise Control:</b> {product.noiseControl}</div>}
+          </>
+        );
+      
+      case 'eyewear':
+        return (
+          <>
+            {commonSpecs}
+            {product.frameMaterial && <div><b>Frame Material:</b> {product.frameMaterial}</div>}
+            {product.lensType && <div><b>Lens Type:</b> {product.lensType}</div>}
+          </>
+        );
+      
+      case 'clothing':
+        return (
+          <>
+            {commonSpecs}
+            {product.material && <div><b>Material:</b> {product.material}</div>}
+            {product.size && <div><b>Size:</b> {product.size}</div>}
+            {product.fit && <div><b>Fit:</b> {product.fit}</div>}
+          </>
+        );
+      
+      default:
+        return commonSpecs;
+    }
+  };
+
   if (loadingProduct) return <div className="p-12">Loading...</div>;
   if (!product) return <div className="p-12">Product not found</div>;
 
@@ -293,13 +337,12 @@ export const SingleProductPage = () => {
               <div className="text-center font-bold">Amazon Delivered</div>
               <div className="text-center font-bold">Secure Transaction</div>
             </div>
+            
+            {/* Updated Product Specifications Section */}
             <div className="bg-gray-50 border rounded p-4 w-72 mb-6">
-              <div><b>Brand:</b> {product.brand}</div>
-              <div><b>Colour:</b> {product.color || "White"}</div>
-              <div><b>Ear Placement:</b> {product.earPlacement}</div>
-              <div><b>Form Factor:</b> {product.formFactor}</div>
-              <div><b>Noise Control:</b> {product.noiseControl}</div>
+              {renderProductSpecs()}
             </div>
+            
             <div>
               <h3 className="text-lg font-semibold mb-2">About the product</h3>
               <ul className="list-disc list-inside space-y-1 text-gray-800 text-sm">

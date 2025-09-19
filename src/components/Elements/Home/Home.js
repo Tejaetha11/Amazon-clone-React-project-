@@ -77,10 +77,12 @@ export const Home = () => {
         <ProductCarousel
           title="Related to items you've viewed"
           products={relatedItems}
+          Seemore={'#'}
         />
         <ProductCarousel
           title="More items to consider"
           products={moreItems}
+          Seemore={'https://bespoke-babka-0ee821.netlify.app/products?catageory=eyewear'}
         />
       </div>
 

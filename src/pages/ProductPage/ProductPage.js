@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";  // Added Link import
+import { useLocation, Link } from "react-router-dom";
 import { useCart } from "../../hooks";
 import { API_BASE_URL } from "../../Config/api";
 
@@ -11,6 +11,7 @@ export const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const query = useQuery();
   const brand = query.get("brand");
+  const catageory = query.get("catageory"); 
 
   const { addToCart } = useCart();
 
@@ -18,21 +19,45 @@ export const ProductsPage = () => {
     fetch(`${API_BASE_URL}/products`)
       .then((res) => res.json())
       .then((allProducts) => {
-        setProducts(
-          brand
-            ? allProducts.filter(
-                (p) => p.brand.toLowerCase() === brand.toLowerCase()
-              )
-            : allProducts
-        );
+        let filteredProducts = allProducts;
+
+        // Filter by brand if specified
+        if (brand) {
+          filteredProducts = filteredProducts.filter(
+            (p) => p.brand.toLowerCase() === brand.toLowerCase()
+          );
+        }
+
+        // Filter by catageory if specified
+        if (catageory) {
+          filteredProducts = filteredProducts.filter(
+            (p) => p.catageory && p.catageory.toLowerCase() === catageory.toLowerCase()
+          );
+        }
+
+        setProducts(filteredProducts);
       })
       .catch(console.error);
-  }, [brand]);
+  }, [brand, catageory]); // Added catageory to dependencies
+
+  // Update title to show catageory filter
+  const getTitle = () => {
+    if (brand && catageory) {
+      return `${brand} ${catageory.charAt(0).toUpperCase() + catageory.slice(1)} Products`;
+    }
+    if (brand) {
+      return `Results for "${brand}"`;
+    }
+    if (catageory) {
+      return `${catageory.charAt(0).toUpperCase() + catageory.slice(1)} Products`;
+    }
+    return "All Products";
+  };
 
   return (
     <div className="max-w-screen-xl mx-auto p-4">
       <h1 className="text-2xl font-semibold mb-6">
-        {brand ? `Results for "${brand}"` : "All Products"}
+        {getTitle()}
       </h1>
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">

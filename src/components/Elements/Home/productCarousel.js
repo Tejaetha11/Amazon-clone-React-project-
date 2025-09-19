@@ -25,7 +25,7 @@ const PrevArrow = ({ onClick }) => (
   </button>
 );
 
-export const ProductCarousel = ({ title, products }) => {
+export const ProductCarousel = ({ title, products, Seemore }) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -51,7 +51,7 @@ export const ProductCarousel = ({ title, products }) => {
     <div className="bg-white p-4 mb-6 shadow-sm">
       <div className="flex justify-between items-center mb-3">
         <h2 className="text-lg font-semibold">{title}</h2>
-        <a href="#" className="text-blue-600 text-sm hover:underline">
+        <a href={Seemore} className="text-blue-600 text-sm hover:underline">
           See more
         </a>
       </div>
