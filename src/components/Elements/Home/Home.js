@@ -105,6 +105,7 @@ export const Home = () => {
         <ProductCarousel
           title="Starting  ₹70,348 | set off on your next great ride"
           products={toppicks}
+          Seemore={'https://bespoke-babka-0ee821.netlify.app/products?catageory=two-wheeler'}
         />
         <ProductCarousel
           title="Up to 80% off | Handcrafted treasures from artisans"
